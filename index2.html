@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý lịch sửa máy lạnh khách sạn Green Riverside</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: #f9fafb;
+            color: #333;
+        }
+        h1, h2 {
+            color: #0077cc;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f3f6f9;
+            color: #555;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        select, input[type="date"], input[type="number"] {
+            padding: 10px 14px; border: 1.5px solid #b6c2d1; border-radius: 8px; font-size: 15px;
+            outline: none; transition: border-color 0.3s, box-shadow 0.3s; width: 100%;
+            box-sizing: border-box; background: #f7fafc; box-shadow: 0 2px 8px rgba(49,130,206,0.07);
+            appearance: none; -webkit-appearance: none; -moz-appearance: none; position: relative;
+        }
+        select:focus, input[type="date"]:focus, input[type="number"]:focus {
+            border-color: #3182ce; box-shadow: 0 0 0 3px rgba(49,130,206,0.15); background: #fff;
+        }
+        select:hover, input[type="date"]:hover, input[type="number"]:hover { border-color: #63b3ed; }
+        select {
+            background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>');
+            background-repeat: no-repeat; background-position: right 12px center;
+            background-size: 18px 18px; padding-right: 36px;
+        }
+        button {
+            padding: 8px 16px; background-color: #3182ce; color: white; border: none;
+            border-radius: 4px; cursor: pointer; font-weight: 600; transition: background-color 0.3s ease;
+        }
+        button:hover { background-color: #2c5282; }
+        .month-box {
+            background: #f7fafc; border-radius: 12px; box-shadow: 0 2px 10px rgba(49,130,206,0.08);
+            padding: 12px 8px 8px 8px; min-height: 80px; display: flex; flex-direction: column;
+            align-items: flex-start; transition: box-shadow 0.3s; border: 1.5px solid #e2e8f0;
+        }
+        .month-box:hover { box-shadow: 0 4px 18px rgba(49,130,206,0.18); border-color: #90cdf4; }
+        .month-box h3 {
+            margin: 0 0 6px 0; color: #3182ce; font-size: 15px; font-weight: 700;
+            letter-spacing: 1px; text-align: left;
+        }
+        .month-list { list-style: none; padding: 0; margin: 0; width: 100%; }
+        .month-list li {
+            background: #fff; border-radius: 5px; margin-bottom: 4px; padding: 4px 7px;
+            font-size: 12px; color: #2d3748; box-shadow: 0 1px 2px rgba(49,130,206,0.04);
+            border: 1px solid #e2e8f0; transition: background 0.2s; line-height: 1.5;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+        }
+        .month-list li:last-child { margin-bottom: 0; }
+    </style>
+</head>
+<body>
+    <h1>Quản lý lịch sửa máy lạnh khách sạn Green Riverside</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Phòng</th><th>Ngày sửa gần nhất</th><th>Chọn ngày</th>
+                <th>Giá sửa (VNĐ)</th><th>Tình trạng</th><th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select id="room-1">
+                        <option value="A001">A001</option><option value="A102">A102</option><option value="A201">A201</option>
+                        <option value="A202">A202</option><option value="A301">A301</option><option value="A302">A302</option>
+                        <option value="A401">A401</option><option value="A402">A402</option><option value="B001">B001</option>
+                        <option value="B102">B102</option><option value="B201">B201</option><option value="B202">B202</option>
+                        <option value="B301">B301</option><option value="B302">B302</option><option value="B401">B401</option>
+                        <option value="B402">B402</option>
+                    </select>
+                </td>
+                <td id="last-1">--</td>
+                <td><input type="date" id="update-1"></td>
+                <td><input type="number" id="price-1" value="500000"></td>
+                <td>
+                    <select id="status-1">
+                        <option value="Vệ sinh">Vệ sinh</option>
+                        <option value="Sửa chữa">Sửa chữa</option>
+                    </select>
+                </td>
+                <td><button onclick="saveNewRecord()">Lưu</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top:40px;">
+        <h2 style="color:#3182ce; text-align:center;">Lịch sử sửa chữa chung</h2>
+        <div style="text-align:center; margin-bottom: 18px; display: flex; justify-content: center; gap: 10px;">
+            <button onclick="resetAllHistory()" style="padding:8px 22px;background:#e53e3e;color:#fff;border:none;border-radius:6px;font-weight:600;font-size:15px;cursor:pointer;">Reset Lịch sử</button>
+            <button onclick="exportToExcel()" style="padding:8px 22px;background:#38a169;color:#fff;border:none;border-radius:6px;font-weight:600;font-size:15px;cursor:pointer;">Xuất Excel</button>
+        </div>
+        <table id="historyTable">
+            <thead>
+                <tr>
+                    <th>Phòng</th><th>Ngày sửa</th><th>Giá sửa (VNĐ)</th>
+                    <th>Tình trạng</th><th>Xoá</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+        </table>
+        <div id="monthHistory" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:18px;margin-top:32px;">
+            <!-- Month boxes will be generated by JS -->
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // --- FIREBASE CONFIGURATION ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKlUVKYO0PoafJX44dgg20qkISJB7SaYk",
+            authDomain: "maylanh-abc69.firebaseapp.com",
+            databaseURL: "https://maylanh-abc69-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "maylanh-abc69",
+            storageBucket: "maylanh-abc69.appspot.com",
+            messagingSenderId: "312034622813",
+            appId: "1:312034622813:web:b30608f628c7c7bd963cb4"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const historyRef = database.ref('history');
+
+        // --- CORE FUNCTIONS ---
+        function saveNewRecord() {
+            const room = document.getElementById('room-1').value;
+            const date = document.getElementById('update-1').value;
+            const price = document.getElementById('price-1').value;
+            const status = document.getElementById('status-1').value;
+
+            if (date && price && status) {
+                historyRef.push({ room, date, price, status });
+                alert(`Đã lưu vào cơ sở dữ liệu chung!`);
+                document.getElementById('last-1').innerText = date;
+            } else {
+                alert('Vui lòng điền đầy đủ thông tin.');
+            }
+        }
+
+        function deleteHistoryRow(recordId) {
+            if (confirm('Bạn có chắc chắn muốn xoá bản ghi này vĩnh viễn?')) {
+                database.ref('history/' + recordId).remove();
+            }
+        }
+
+        function resetAllHistory() {
+            if (confirm('!!! CẢNH BÁO !!!\nBạn có chắc muốn XOÁ TOÀN BỘ LỊCH SỬ của tất cả mọi người không? Hành động này không thể hoàn tác.')) {
+                historyRef.remove();
+            }
+        }
+
+        // --- REAL-TIME DATA LISTENER ---
+        historyRef.on('value', (snapshot) => {
+            const historyData = snapshot.val();
+            const historyBody = document.getElementById('historyBody');
+            const monthHistoryContainer = document.getElementById('monthHistory');
+            
+            historyBody.innerHTML = '';
+            monthHistoryContainer.innerHTML = '';
+
+            const monthData = {};
+
+            if (historyData) {
+                Object.keys(historyData).forEach(key => {
+                    const record = historyData[key];
+                    const { room, date, price, status } = record;
+
+                    // Populate history table
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${room}</td><td>${date}</td><td>${price}</td><td>${status}</td><td><button onclick="deleteHistoryRow('${key}')" style='background:#e53e3e;color:#fff;border:none;border-radius:4px;padding:4px 10px;cursor:pointer;'>Xoá</button></td>`;
+                    historyBody.appendChild(tr);
+
+                    // Group data by month
+                    const month = date.substring(0, 7); // "YYYY-MM"
+                    if (!monthData[month]) {
+                        monthData[month] = [];
+                    }
+                    monthData[month].push(record);
+                });
+            }
+            
+            // Populate month boxes
+            const sortedMonths = Object.keys(monthData).sort().reverse();
+            sortedMonths.forEach(monthKey => {
+                const monthName = new Date(monthKey + '-02').toLocaleString('vi-VN', { month: 'long', year: 'numeric' });
+                const monthBox = document.createElement('div');
+                monthBox.className = 'month-box';
+                let listItems = '';
+                monthData[monthKey].forEach(rec => {
+                    listItems += `<li>${rec.room} | ${rec.date} | ${rec.price}đ | ${rec.status}</li>`;
+                });
+                monthBox.innerHTML = `<h3>${monthName}</h3><ul class="month-list">${listItems}</ul>`;
+                monthHistoryContainer.appendChild(monthBox);
+            });
+        });
+
+        // --- UTILITY FUNCTIONS ---
+        function exportToExcel() {
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "Phòng,Ngày sửa,Giá sửa (VNĐ),Tình trạng\n";
+            const rows = document.querySelectorAll('#historyBody tr');
+            rows.forEach(row => {
+                const cols = row.querySelectorAll('td');
+                if (cols.length >= 4) {
+                    csvContent += `${cols[0].innerText},${cols[1].innerText},${cols[2].innerText},"${cols[3].innerText}"\n`;
+                }
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "lich_su_sua_chua.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html> 
